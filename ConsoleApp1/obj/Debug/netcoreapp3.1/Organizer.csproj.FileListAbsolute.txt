@@ -1,0 +1,15 @@
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Organizer.exe
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.csprojAssemblyReference.cache
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.AssemblyInfoInputs.cache
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.AssemblyInfo.cs
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Organizer.deps.json
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Organizer.runtimeconfig.json
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Organizer.runtimeconfig.dev.json
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Organizer.dll
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Organizer.pdb
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Telegram.Bot.dll
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.csproj.CopyComplete
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.dll
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.pdb
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.genruntimeconfig.cache
