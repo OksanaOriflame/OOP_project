@@ -12,6 +12,7 @@ namespace Organizer
                     new DataBase(),
                 new TelegramBot());
             organizer.Start();
+            var message = "obeme";
         }
     }
 }
