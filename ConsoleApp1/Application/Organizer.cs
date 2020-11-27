@@ -46,7 +46,7 @@ namespace Organizer
             this.items = new Dictionary<int, IOrganizerItem>(items.Select(item => new KeyValuePair<int, IOrganizerItem>(item.GetId(), item)));
             this.dataBase = dataBase;
             this.ui = ui;
-            worker = new Thread(Work);
+            ui.OnMessageRecieved += Work;
         }
 
         public Dictionary<string, int> GetGlobalOptions()
@@ -54,23 +54,11 @@ namespace Organizer
             return new Dictionary<string, int>(items.Select(item => new KeyValuePair<string, int>(item.Value.GetName(), item.Key)));
         }
 
-        public void Start()
+        private void Work(RequestHandler request)
         {
-            ui.Start();
-            worker.Start();
-        }
-
-        private void Work()
-        {
-            var a = 1;
-            while (true)
+            if (request != null)
             {
-                var request = ui.GetNextRequest();
-                if (request != null)
-                {
-                    ui.SendAnswer(new RequestHandler(request.UserId, default, default, a.ToString()));
-                    a++;
-                }
+                ui.SendAnswer(new RequestHandler(request.UserId, default, default, "jojo"));
             }
         }
     }

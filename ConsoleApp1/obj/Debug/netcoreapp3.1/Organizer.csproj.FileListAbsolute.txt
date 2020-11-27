@@ -13,3 +13,4 @@ H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.csproj
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.dll
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.pdb
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.genruntimeconfig.cache
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.csproj.CoreCompileInputs.cache

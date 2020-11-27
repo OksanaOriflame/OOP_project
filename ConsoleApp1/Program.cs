@@ -11,8 +11,7 @@ namespace Organizer
                     {new ThemeLists()},
                     new DataBase(),
                 new TelegramBot());
-            organizer.Start();
-            var message = "obeme";
+            Console.ReadKey();
         }
     }
 }

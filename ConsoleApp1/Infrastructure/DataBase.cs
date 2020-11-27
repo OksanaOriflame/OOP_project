@@ -5,19 +5,19 @@ namespace Organizer
 {
     public class DataBase : IDataBase
     {
-        private Dictionary<long, Dictionary<int, Dictionary<DateTime, byte[]>>> data;
+        private Dictionary<int, Dictionary<int, Dictionary<int, Dictionary<DateTime, byte[]>>>> data;
         public DataBase()
         {
-            data = new Dictionary<long, Dictionary<int, Dictionary<DateTime, byte[]>>>();
+            data = new Dictionary<int, Dictionary<int, Dictionary<int, Dictionary<DateTime, byte[]>>>>();
         }
-        public byte[] GetData(long userId, int dataTypeId, int subDataTypeId, DateTime time)
+        public byte[] GetData(int userId, int dataTypeId, int subDataTypeId, DateTime time)
         {
-            return data[userId][dataTypeId][time];
+            return data[userId][dataTypeId][subDataTypeId][time];
         }
 
-        public void SaveData(long userId, int dataTypeId, int subDataTypeId, DateTime time, byte[] data)
+        public void SaveData(int userId, int dataTypeId, int subDataTypeId, DateTime time, byte[] data)
         {
-            this.data[userId][dataTypeId][time] = data;
+            this.data[userId][dataTypeId][subDataTypeId][time] = data;
         }
     }
 }
