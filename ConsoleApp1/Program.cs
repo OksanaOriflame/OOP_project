@@ -11,6 +11,7 @@ namespace Organizer
                     {new ThemeLists()},
                     new DataBase(),
                 new TelegramBot());
+            var a = default(DateTime);
             Console.ReadKey();
         }
     }

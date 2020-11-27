@@ -39,7 +39,7 @@ namespace Organizer
             else
             {
                 Console.WriteLine(message);
-                OnMessageRecieved(new RequestHandler(userId, new State(0, 0), default, message));
+                OnMessageRecieved(new RequestHandler(new State(userId, 0, 0), default, message));
             }
         }
 
@@ -52,7 +52,7 @@ namespace Organizer
 
         public void SendAnswer(RequestHandler answer)
         {
-            bot.SendTextMessageAsync(chatIds[answer.UserId], answer.Text);
+            bot.SendTextMessageAsync(chatIds[answer.State.UserId], answer.Text);
         }
     }
 }
