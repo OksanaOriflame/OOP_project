@@ -6,7 +6,7 @@ namespace Organizer
 {
     public interface IUi
     {
-        public void SendAnswer(RequestHandler answer);
-        public event Action<RequestHandler> OnMessageRecieved;
+        public void SendAnswer(Request answer);
+        public event Action<Request> OnMessageRecieved;
     }
 }

@@ -8,7 +8,7 @@ namespace Organizer
     {
         public int GetId();
         public string GetName();
-        public RequestHandler GetMessage(RequestHandler requestHandler);
-        public void Check(RequestHandler handler);
+        public Request GetMessage(Request request);
+        public void Check(Request handler);
     }
 }

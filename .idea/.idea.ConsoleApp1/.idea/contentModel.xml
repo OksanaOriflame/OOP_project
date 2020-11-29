@@ -6,18 +6,23 @@
     <e p="H:\IMKN\project\ConsoleApp1" t="IncludeFlat">
       <e p="ConsoleApp1" t="IncludeRecursive">
         <e p="Application" t="Include">
-          <e p="IDataBase.cs" t="Include" />
+          <e p="IDataBaseIncorrect.cs" t="Include" />
           <e p="IOrganizerItem.cs" t="Include" />
           <e p="IUi.cs" t="Include" />
           <e p="Organizer.cs" t="Include" />
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Domain" t="Include">
-          <e p="Class1.cs" t="Include" />
+          <e p="DeadlineTasks.cs" t="Include" />
+          <e p="IThemeList.cs" t="Include" />
+          <e p="ListItem.cs" t="Include" />
+          <e p="ThemeLists.cs" t="Include" />
         </e>
         <e p="Infrastructure" t="Include">
           <e p="BytesExtensions.cs" t="Include" />
           <e p="DataBase.cs" t="Include" />
+          <e p="DataBaseIncorrect.cs" t="Include" />
+          <e p="GlobalStates.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
