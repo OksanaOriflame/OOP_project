@@ -65,7 +65,7 @@ namespace Organizer
                 request.IsShowThisItem = true;
             }
 
-            var answer = items[userState.GlobalState].GetMessage(request, userState);
+            var answer = items[userState.GlobalState].GetAnswer(request, userState);
             if (answer.IsBackward)
             {
                 userState.GlobalState = GlobalStates.Organizer;

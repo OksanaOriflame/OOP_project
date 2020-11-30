@@ -22,50 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c17deb5-954a-4fae-82e1-06a5c1be2f69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/Application/Answer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/Application/Request.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/DailyTasks.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeList.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Google.Protobuf.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/K4os.Compression.LZ4.Streams.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/K4os.Compression.LZ4.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/K4os.Hash.xxHash.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/MySql.Data.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Renci.SshNet.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/SshNet.Security.Cryptography.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/System.Drawing.Common.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/System.Security.Permissions.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/System.Windows.Extensions.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/System.Xml.XPath.XmlDocument.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Ubiety.Dns.Core.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Zstandard.Net.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp3.0/System.Windows.Extensions.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ConsoleApp1/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ConsoleApp1/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ConsoleApp1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ConsoleApp1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Application/IOrganizerItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Application/IOrganizerItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Application/IUi.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Application/IUi.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Application/Organizer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Application/Organizer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/DeadlineTasks.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/DeadlineTasks.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/IThemeList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/IThemeList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeLists.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeLists.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Infrastructure/BytesExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Infrastructure/BytesExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/UI/TelegramBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/UI/TelegramBot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Organizer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Organizer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Organizer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Organizer.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.pdb" afterDir="false" />
-    </list>
+    <list default="true" id="2c17deb5-954a-4fae-82e1-06a5c1be2f69" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,6 +118,7 @@
       <workItem from="1606565751804" duration="27567000" />
       <workItem from="1606612162935" duration="1782000" />
       <workItem from="1606656514191" duration="34281000" />
+      <workItem from="1606730180091" duration="575000" />
     </task>
     <task id="LOCAL-00001" summary="added obeme">
       <created>1606431199525</created>
@@ -190,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606656616012</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="abstract theme list&#10;daily tasks">
+      <created>1606730253499</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606730253499</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,7 +182,8 @@
     <MESSAGE value="some changes" />
     <MESSAGE value="Added 1 DeadlineTasks : IThemeList &#10;Incorrect UI requeasts handle" />
     <MESSAGE value="Added abstract ThemeList!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added abstract ThemeList!" />
+    <MESSAGE value="abstract theme list&#10;daily tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value="abstract theme list&#10;daily tasks" />
   </component>
   <component name="WindowStateProjectService">
     <state width="442" height="464" key="DebuggerActiveHint" timestamp="1606689189638">
@@ -324,10 +290,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606434099510" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1606656619285">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1606730255817">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606656619285" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606730255817" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1606592355967">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

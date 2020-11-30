@@ -21,7 +21,7 @@ namespace Organizer
 
         public string GetName() => "Тематические списки дел";
 
-        public Answer GetMessage(UiRequest request, State userState)
+        public Answer GetAnswer(UiRequest request, State userState)
         {
             if (userState.SubStateId == 0)
             {
@@ -49,6 +49,11 @@ namespace Organizer
             return answer;
         }
 
+        public CheckAnswer Check(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         private Answer MenuAnswer(State userState)
         {
             return Answer.MenuAnswer(
@@ -58,16 +63,6 @@ namespace Organizer
                     .OrderBy(list => list.Key)
                     .Select(list => list.Value.GetName())
                     .ToArray());
-        }
-
-        public void Check()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Check(Request handler)
-        {
-            throw new System.NotImplementedException();
         }
     }
 
