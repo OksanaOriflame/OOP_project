@@ -8,7 +8,7 @@ namespace Organizer
     {
         public int GetId();
         public string GetName();
-        public Request GetMessage(Request request);
+        public Answer GetMessage(UiRequest request, State userState);
         public void Check(Request handler);
     }
 }

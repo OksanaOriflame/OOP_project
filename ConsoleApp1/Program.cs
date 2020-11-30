@@ -12,11 +12,12 @@ namespace Organizer
                 {
                     new ThemeLists(new IThemeList[]
                     {
-                        new DeadlineTasks(dataBase)
+                        new DeadlineTasks(dataBase),
+                        new DailyTasks(dataBase) 
                     })
                 },
                     dataBase,
-                new TelegramBot());
+                new TelegramBot(dataBase));
             Console.ReadKey();
         }
     }

@@ -59,5 +59,30 @@ namespace Organizer
         {
             return bytes.Skip(8).ToArray().To_String();
         }
+        
+        public static byte[] ToBytes(this Answer ans)
+        {
+            return ((int) ans.Format).ToBytes()
+                .Concat(ans.NumberRange.Item1.ToBytes())
+                .Concat(ans.NumberRange.Item2.ToBytes())
+                .ToArray();
+        }
+        
+        public static Answer ToAnswer(this byte[] bytes)
+        {
+            var result = new int[3];
+            for (var j = 0; j < result.Length; j++)
+            {
+                var i = j * 4;
+                result[i] = new byte[] {bytes[i], bytes[i + 1], bytes[i + 2], bytes[i + 3]}.ToInt();
+            }
+
+            return new Answer()
+            {
+                Format = (ExpectingRequestFormat) result[0], 
+                NumberRange = new Tuple<int, int>(result[1], result[2]),
+                Headline = ""
+            };
+        }
     }
 }

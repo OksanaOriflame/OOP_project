@@ -10,24 +10,12 @@ using Org.BouncyCastle.Asn1.Pkcs;
 
 namespace Organizer
 {
-    public class Request
-    {
-        
-        public State State { get; set; }
-        public DateTime Date { get; set; }
-        public string Text { get; set; }
 
-        public Request(State state, DateTime date, string text)
-        {
-            State = state;
-            Date = date;
-            Text = text;
-        }
-    }
+    
 
     public class State
     {
-        public int UserId { get; set; }
+        public int UserId { get; }
         public GlobalStates GlobalState { get; set; }
         public int SubStateId { get; set; }
 
@@ -42,71 +30,64 @@ namespace Organizer
     public class Organizer
     {
         private IDataBase dataBase;
-        private Dictionary<int, IOrganizerItem> items;
+        private Dictionary<GlobalStates, IOrganizerItem> items;
         private IUi ui;
         private Dictionary<int, State> userStates;
 
         public Organizer(IOrganizerItem[] items, IDataBase dataBase, IUi ui)
         {
             this.items =
-                new Dictionary<int, IOrganizerItem>(
-                    items.Select(item => new KeyValuePair<int, IOrganizerItem>(item.GetId(), item)));
+                new Dictionary<GlobalStates, IOrganizerItem>(
+                    items.Select(item => new KeyValuePair<GlobalStates, IOrganizerItem>((GlobalStates)item.GetId(), item)));
             this.dataBase = dataBase;
             this.ui = ui;
             ui.OnMessageRecieved += ReactOnMessage;
             userStates = new Dictionary<int, State>();
         }
 
-        public Dictionary<string, int> GetGlobalOptions()
+        private void ReactOnMessage(UiRequest request)
         {
-            return new Dictionary<string, int>(items.Select(item =>
-                new KeyValuePair<string, int>(item.Value.GetName(), item.Key)));
-        }
-
-        private void ReactOnMessage(Request request)
-        {
-            var userState = GetUserState(request.State.UserId);
-            request.State = userState;
+            var userState = GetUserState(request.UserId);
             var answer = GetAnswer(request, userState);
             ui.SendAnswer(answer);
         }
 
-        private Request GetAnswer(Request request, State userState)
+        private Answer GetAnswer(UiRequest request, State userState)
         {
-            var answer = OrganizerAnswer(userState);
             if (userState.GlobalState == GlobalStates.Organizer)
             {
-                if (request.Text.Length > 1)
+                if (request.IsShowThisItem || request.IsBackward)
                 {
-                    var parseable = int.TryParse(request.Text.Substring(1), out var result);
-                    if (parseable && items.ContainsKey(result))
-                    {
-                        userState.GlobalState = (GlobalStates)result;
-                        SaveUserState(userState);
-                        answer = items[result].GetMessage(request);
-                    }
+                    return OrganizerAnswer(userState);
                 }
+
+                userState.GlobalState = (GlobalStates) request.Number;
+                request.IsShowThisItem = true;
             }
-            else
+
+            var answer = items[userState.GlobalState].GetMessage(request, userState);
+            if (answer.IsBackward)
             {
-                answer = items[(int)userState.GlobalState].GetMessage(request);
-                if (answer.State.GlobalState == GlobalStates.Organizer)
-                    answer = OrganizerAnswer(answer.State);
-                SaveUserState(answer.State);
+                userState.GlobalState = GlobalStates.Organizer;
+                answer = OrganizerAnswer(userState);
             }
+            SaveUserState(userState);
             return answer;
         }
 
-        private Request OrganizerAnswer(State userState)
+        private Answer OrganizerAnswer(State userState)
         {
-            var answer = new StringBuilder();
-            answer.Append("Выберите номер пункта меню:\n");
-            foreach (var item in items)
+            return new Answer()
             {
-                answer.Append("/" + item.Key + " - " + item.Value.GetName() + "\n");
-            }
-
-            return new Request(userState, default, answer.ToString());
+                UserId = userState.UserId,
+                Format = ExpectingRequestFormat.Number, 
+                NumberRange = new Tuple<int, int>(1, items.Count), 
+                Headline = "Выберите номер пункта меню:", 
+                Items = items
+                    .OrderBy(item => item.Key)
+                    .Select(item => item.Value.GetName()).ToArray(),
+                IsBackward = false
+            };
         }
 
         private State GetUserState(int userId)

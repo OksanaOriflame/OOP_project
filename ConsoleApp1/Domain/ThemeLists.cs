@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -8,71 +9,55 @@ namespace Organizer
     public class ThemeLists : IOrganizerItem
     {
         private Dictionary<int, IThemeList> themeLists;
-        private bool isActive;
 
         public ThemeLists(IThemeList[] lists)
         {
             themeLists = 
                 new Dictionary<int, IThemeList>(
                     lists.Select(list => new KeyValuePair<int, IThemeList>(list.GetId(), list)));
-            isActive = false;
         }
 
         public int GetId() => 1;
 
         public string GetName() => "Тематические списки дел";
 
-        public Request GetMessage(Request request)
+        public Answer GetMessage(UiRequest request, State userState)
         {
-            if (request.State.SubStateId == 0)
+            if (userState.SubStateId == 0)
             {
-                if (request.Text.ToLower() == "/back")
+                if (request.IsShowThisItem)
                 {
-                    isActive = false;
-                    return new Request(new State(request.State.UserId, GlobalStates.Organizer, 0), default,
-                        "Ok, vernulsya");
+                    return MenuAnswer(userState);
                 }
 
-                if (!isActive)
+                if (request.IsBackward)
                 {
-                    isActive = true;
-                    return MenuAnswer(request);
+                    return Answer.BackWardAnswer(userState.UserId);
                 }
 
-                if (request.Text.Length > 1)
-                {
-                    var parseable = int.TryParse(request.Text.Substring(1), out var result);
-                    if (parseable && themeLists.ContainsKey(result))
-                    {
-                        request.State.SubStateId = result;
-                        return themeLists[result].GetAnswer(request);
-                    }
-                }
-
-                return MenuAnswer(request);
+                userState.SubStateId = request.Number;
+                request.IsShowThisItem = true;
             }
 
-            var answer = themeLists[request.State.SubStateId].GetAnswer(request);
-            if (answer.State.SubStateId == 0)
+            var answer = themeLists[userState.SubStateId].GetAnswer(request, userState);
+            if (answer.IsBackward)
             {
-                return MenuAnswer(answer);
+                userState.SubStateId = 0;
+                answer = MenuAnswer(userState);
             }
 
             return answer;
         }
 
-        private Request MenuAnswer(Request request)
+        private Answer MenuAnswer(State userState)
         {
-            var answer = new StringBuilder();
-            answer.Append("Выберите номер пункта меню::\n");
-            foreach (var list in themeLists)
-            {
-                answer.Append("/" + list.Key + " - " + list.Value.GetName() + "\n");
-            }
-
-            answer.Append("/back");
-            request.Text = answer.ToString();
-            return request;
+            return Answer.MenuAnswer(
+                userState.UserId,
+                "Списки дел",
+                themeLists
+                    .OrderBy(list => list.Key)
+                    .Select(list => list.Value.GetName())
+                    .ToArray());
         }
 
         public void Check()

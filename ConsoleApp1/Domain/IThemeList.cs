@@ -4,6 +4,6 @@
     {
         public int GetId();
         public string GetName();
-        public Request GetAnswer(Request request);
+        public Answer GetAnswer(UiRequest request, State userState);
     }
 }

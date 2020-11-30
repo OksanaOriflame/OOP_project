@@ -6,201 +6,149 @@ using Org.BouncyCastle.Ocsp;
 
 namespace Organizer
 {
-    enum ThemeListState
+    public enum ThemeListState
     {
         Menu = 0,
         TasksViewing = 1,
         Adding = 2
     }
 
-    enum AddingStates
+    public enum AddingStates
     {
-        Deadline,
-        Text
+        Deadline = 0,
+        Text = 1
+    }
+
+    enum DeadLineTaskViewingStates
+    {
+        Listing,
+        Concrete,
+        TaskMenuChoosing
     }
     
-    public class DeadlineTasks : IThemeList
+    public class DeadlineTasks : ThemeList, IThemeList
     {
-        public int GetId() => 1;
-        private int idWithOffset => GetId() + 100;
-        public string GetName() => "Дела с дедлайном";
-        private bool isActive;
-        private Dictionary<int, ThemeListState> currentStates;
         private Dictionary<int, AddingStates> currentAddingStates;
         private Dictionary<int, ListItem> newItems;
-        private IDataBase dataBase;
+        private Dictionary<int, DeadLineTaskViewingStates> currentViewingStates;
+        public int GetId() => 1;
+        protected override int GetIdWithOffset() => GetId() + 100;
+        public override string GetName() => "Дела с дедлайном";
 
-        public DeadlineTasks(IDataBase dataBase)
+        protected override ListItem ParseListItemFromBytes(byte[] bytes)
         {
-            isActive = false;
-            currentStates = new Dictionary<int, ThemeListState>();
+            return new ListItem()
+            {
+                DeadLineTime = bytes.DateTimeFromFirstBytes(),
+                Text = bytes.ToStringFrom(8)
+            };
+        }
+
+        protected override byte[] ConvertListItemToBytes(ListItem item)
+        {
+            return item.DeadLineTime.ToBytes().Concat(item.Text.ToBytes()).ToArray();
+        }
+
+        public DeadlineTasks(IDataBase dataBase) : base(dataBase)
+        {
+            currentViewingStates = new Dictionary<int, DeadLineTaskViewingStates>();
             currentAddingStates = new Dictionary<int, AddingStates>();
             newItems = new Dictionary<int, ListItem>();
-            this.dataBase = dataBase;
         }
-        
-        public Request GetAnswer(Request request)
+
+        protected override Answer AnswerExistingTasksViewing(UiRequest request, State userState)
         {
-            if (!isActive)
+            var userId = userState.UserId;
+            if (!currentViewingStates.ContainsKey(userId))
             {
-                currentStates[request.State.UserId] = ThemeListState.Menu;
-                return MenuAnswer(request);
+                currentViewingStates[userId] = DeadLineTaskViewingStates.Listing;
             }
 
-            switch (currentStates[request.State.UserId])
+            if (currentViewingStates[userId] == DeadLineTaskViewingStates.Listing)
             {
-                case ThemeListState.Menu:
-                    return MenuAnswer(request);
-                case ThemeListState.Adding:
-                    if (currentAddingStates[request.State.UserId] == AddingStates.Deadline)
+                currentViewingStates[userId] = DeadLineTaskViewingStates.Concrete;
+                return TasksListAnswer(userId);
+            }
+            else if (currentViewingStates[userId] == DeadLineTaskViewingStates.Concrete)
+            {
+                if (request.IsBackward)
+                {
+                    return Answer.BackWardAnswer(userId);
+                }
+
+                var inputedTaskNumber = request.Number;
+                currentViewingStates[userId] = DeadLineTaskViewingStates.TaskMenuChoosing;
+                return TaskMenuAnswer(userId, inputedTaskNumber);
+            }
+            else if (currentViewingStates[userId] == DeadLineTaskViewingStates.TaskMenuChoosing)
+            {
+                if (request.IsBackward)
+                {
+                    currentViewingStates[userId] = DeadLineTaskViewingStates.Concrete;
+                    return TasksListAnswer(userId);
+                }
+            }
+
+            currentViewingStates[userId] = DeadLineTaskViewingStates.Listing;
+            return Answer.BackWardAnswer(userId);
+        }
+
+        private Answer TaskMenuAnswer(int userId, int inputedTaskNumber)
+        {
+            var tasksCount = GetTasksCount(userId, default);
+            var tasks = GetAllCurrentTasks(userId, tasksCount, default);
+            var currentTask = tasks[inputedTaskNumber - 1];
+            return Answer.MenuAnswer(userId, 
+                string.Format("{0} (до {1})", new string[2] {currentTask.Text, currentTask.DeadLineTime.ToString()}),
+                new string[] {"Дело сделано!", "Изменить дело"});
+        }
+
+        private Answer TasksListAnswer(int userId)
+        {
+            var tasksCount = GetTasksCount(userId, default);
+            if (tasksCount == 0)
+            {
+                return Answer.EmptyListAnswer(userId, GetName());
+            }
+
+            var tasksLines = GetAllCurrentTasks(userId, tasksCount, default)
+                .Select(task => task.Text + " (до " + task.DeadLineTime + ")");
+            return Answer.ListAnswer(userId, GetName(), tasksLines.ToArray());
+        }
+
+        protected override Answer AnswerTaskAdding(UiRequest request, State userState)
+        {
+            var userId = userState.UserId;
+            if (request.IsShowThisItem)
+            {
+                currentAddingStates[userId] = AddingStates.Deadline;
+                return Answer.AskForDateAndTime(userId);
+            }
+
+            switch (currentAddingStates[userId])
+            {
+                case AddingStates.Deadline:
+                    if (request.IsBackward)
                     {
-                        return AnswerDeadlineAdding(request);
+                        return Answer.BackWardAnswer(userId);
+                    }
+                    newItems[userId] = new ListItem(){ DeadLineTime = request.DateTime};
+                    currentAddingStates[userId] = AddingStates.Text;
+                    return Answer.AskForText(userId, "Назовите дело");
+                case AddingStates.Text:
+                    if (request.IsBackward)
+                    {
+                        currentAddingStates[userId] = AddingStates.Deadline;
+                        return Answer.AskForText(userId, "Назовите дело");
                     }
 
-                    return AnswerTaskTextAdding(request);
-                case ThemeListState.TasksViewing:
-                    return AnswerTasksViewing(request);
+                    newItems[userId].Text = request.Text;
+                    SaveTask(newItems[userId], userState, default,
+                        item => item.DeadLineTime.Ticks);
+                    return Answer.BackWardAnswer(userId);
             }
-
-            return MenuAnswer(request);
+            return Answer.BackWardAnswer(userId);
         }
 
-        private Request MenuAnswer(Request request)
-        {
-            if (request.Text.ToLower() == "/back")
-            {
-                request.State.SubStateId = 0;
-                request.Text = "";
-                isActive = false;
-                return request;
-            }
-
-            if (isActive && request.Text.Length > 1)
-            {
-                switch (request.Text)
-                {
-                    case "/1":
-                        currentStates[request.State.UserId] = ThemeListState.TasksViewing;
-                        return GetTasks(request);
-                    case "/2":
-                        currentStates[request.State.UserId] = ThemeListState.Adding;
-                        currentAddingStates[request.State.UserId] = AddingStates.Deadline;
-                        request.Text = "Укажите дедлайн\n/Back";
-                        return request;
-                }
-            }
-            var answer = "Выберите номер пункта меню:\n/1 - Посмотреть дела\n/2 - Добавить новое дело\n/Back";
-            request.Text = answer;
-            isActive = true;
-            return request;
-        }
-
-        private Request GetTasks(Request request)
-        {
-            var answer = new StringBuilder();
-            var userId = request.State.UserId;
-            var isInDataBase = dataBase.TryGetData(userId, idWithOffset, 0, default, out var tasksCountBytes);
-            if (!isInDataBase || tasksCountBytes.ToInt() == 0)
-            {
-                request.Text = "У вас нет дел\n/Back";
-                return request;
-            }
-
-            var tasks = new List<Tuple<DateTime, string>>();
-            var tasksCount = tasksCountBytes.ToInt();
-            for (var i = 1; i <= tasksCount; i++)
-            {
-                dataBase.TryGetData(userId, idWithOffset, i, default, out var task);
-                tasks.Add(new Tuple<DateTime, string>(task.DateTimeFromFirstBytes(), task.ToStringFrom(8)));
-            }
-
-            var j = 1;
-            foreach (var task in tasks.OrderBy(task => task.Item1))
-            {
-                answer.Append("/" + j + " - " + task.Item2 + " ( до " + task.Item1 + " )\n");
-                j++;
-            }
-
-            answer.Append("/Back");
-            request.Text = answer.ToString();
-            return request;
-        }
-
-        private Request AnswerTasksViewing(Request request)
-        {
-            if (request.Text.ToLower() == "/back")
-            {
-                currentStates[request.State.UserId] = ThemeListState.Menu;
-                request.Text = "";
-                return MenuAnswer(request);
-            }
-            
-            if (int.TryParse(request.Text.Substring(1), out var taskNumber))
-            {
-                var isInDataBase = dataBase.TryGetData(request.State.UserId, idWithOffset, 0, default,
-                    out var tasksCountBytes);
-                if (!isInDataBase || taskNumber > tasksCountBytes.ToInt())
-                {
-                    request.Text = "Задачи с таким номером нет\n/Back";
-                    return request;
-                }
-            }
-
-            return GetTasks(request);
-        }
-
-        private Request AnswerDeadlineAdding(Request request)
-        {
-            var userId = request.State.UserId;
-            if (request.Text.ToLower() == "/back")
-            {
-                currentStates[userId] = ThemeListState.Menu;
-                request.Text = "";
-                return MenuAnswer(request);
-            }
-            if (DateTime.TryParse(request.Text, out var time))
-            {
-                newItems[userId] = new ListItem() {DeadLineTime = time};
-                currentAddingStates[userId] = AddingStates.Text;
-                request.Text = "Назовите дело\n/back";
-                return request;
-            }
-            request.Text = "Неверный формат времени";
-            return request;
-        }
-
-        private Request AnswerTaskTextAdding(Request request)
-        {
-            var userId = request.State.UserId;
-            if (request.Text.ToLower() == "/back")
-            {
-                currentStates[userId] = ThemeListState.Menu;
-                currentAddingStates[userId] = AddingStates.Deadline;
-                request.Text = "/2";
-                return MenuAnswer(request);
-            }
-
-            newItems[userId].Text = request.Text;
-            SaveTask(newItems[userId], request.State);
-            currentStates[userId] = ThemeListState.Menu;
-            request.Text = "";
-            return MenuAnswer(request);
-        }
-
-        private void SaveTask(ListItem item, State userState)
-        {
-            var isInDataBase = dataBase.TryGetData(userState.UserId, idWithOffset, 0, default, out var tasksCountBytes);
-            if (!isInDataBase)
-            {
-                tasksCountBytes = 0.ToBytes();
-            }
-
-            var tasksCount = tasksCountBytes.ToInt();
-            tasksCount++;
-            var data = item.DeadLineTime.ToBytes().Concat(item.Text.ToBytes());
-            dataBase.SaveData(userState.UserId, idWithOffset, tasksCount, default, data.ToArray());
-            dataBase.SaveData(userState.UserId, idWithOffset, 0, default, tasksCount.ToBytes());
-        }
-        
     }
 }
