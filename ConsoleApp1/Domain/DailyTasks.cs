@@ -19,12 +19,12 @@ namespace Organizer
         AddingTask
     }
     
-    public class DailyTasks : ThemeList, IThemeList
+    public class DailyTasks : ThemeList
     {
         private Dictionary<int, DailyTasksViewingState> currentViewingStates;
         private Dictionary<int, DailyTasksAddingState> currentAddingState;
         private Dictionary<int, Func<UiRequest, State, Answer>> AddingMenuOptions;
-        public int GetId() => 2;
+        public override int GetId() => 2;
         public override string GetName() => "Ежедневные дела";
         protected override int GetIdWithOffset() => 1000 + GetId();
         protected override byte[] ConvertListItemToBytes(ListItem item)
@@ -48,7 +48,7 @@ namespace Organizer
             };
         }
 
-        protected override Answer AnswerExistingTasksViewing(UiRequest request, State userState)
+        protected override Answer ExistingTasksViewingAnswer(UiRequest request, State userState)
         {
             var userId = userState.UserId;
             if (!currentViewingStates.ContainsKey(userId))
@@ -107,7 +107,7 @@ namespace Organizer
             return dates.ToArray();
         }
 
-        protected override Answer AnswerTaskAdding(UiRequest request, State userState)
+        protected override Answer TaskAddingAnswer(UiRequest request, State userState)
         {
             var userId = userState.UserId;
             if (!currentAddingState.ContainsKey(userId))

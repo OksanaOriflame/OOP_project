@@ -84,5 +84,21 @@ namespace Organizer
                 Headline = ""
             };
         }
+        
+        public static byte[] ToBytes(this AlarmItem alarmItem)
+        {
+            var firstPart = alarmItem.DateAndTime.ToBytes().ToList();
+            var secondPart = alarmItem.Name.ToBytes().ToList();
+
+            return firstPart.Concat(secondPart).ToArray();
+        }
+
+        public static AlarmItem ToAlarmItem(this byte[] bytes)
+        {
+            var dateAndTime = bytes.Take(8).ToArray().ToDateTime();
+            var name = bytes.Skip(8).ToArray().To_String();
+
+            return new AlarmItem(name, dateAndTime);
+        }
     }
 }

@@ -33,6 +33,7 @@ namespace Organizer
         private Dictionary<GlobalStates, IOrganizerItem> items;
         private IUi ui;
         private Dictionary<int, State> userStates;
+        private Thread checker;
 
         public Organizer(IOrganizerItem[] items, IDataBase dataBase, IUi ui)
         {
@@ -43,6 +44,16 @@ namespace Organizer
             this.ui = ui;
             ui.OnMessageRecieved += ReactOnMessage;
             userStates = new Dictionary<int, State>();
+            checker = new Thread(Check);
+        }
+
+        private void Check()
+        {
+            var checkAnswers = new List<CheckAnswer>();
+            foreach (var item in items)
+            {
+                var answer = item.Value.Check(default);
+            }
         }
 
         private void ReactOnMessage(UiRequest request)

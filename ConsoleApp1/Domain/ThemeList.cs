@@ -4,9 +4,10 @@ using System.Linq;
 
 namespace Organizer
 {
-    public abstract class ThemeList
+    public abstract class ThemeList : IThemeList
     {
         public abstract string GetName();
+        public abstract int GetId();
         protected abstract int GetIdWithOffset();
         protected IDataBase dataBase;
         protected Dictionary<int, Func<UiRequest, State, Answer>> menuActions;
@@ -19,7 +20,7 @@ namespace Organizer
             this.dataBase = dataBase;
             menuActions = new Dictionary<int, Func<UiRequest, State, Answer>>
             {
-                [1] = AnswerTasksViewing, [2] = AnswerTaskAdding
+                [1] = AnswerTasksViewing, [2] = TaskAddingAnswer
             };
             currentStates = new Dictionary<int, ThemeListState>();
         }
@@ -74,10 +75,10 @@ namespace Organizer
         
         protected Answer AnswerTasksViewing(UiRequest request, State userState)
         {
-            return AnswerExistingTasksViewing(request, userState);
+            return ExistingTasksViewingAnswer(request, userState);
         }
 
-        protected abstract Answer AnswerTaskAdding(UiRequest request, State userState);
+        protected abstract Answer TaskAddingAnswer(UiRequest request, State userState);
         
         internal Answer MenuAnswer(State userState)
         {
@@ -87,10 +88,10 @@ namespace Organizer
                 new [] {"Посмотреть дела", "Добавить новое дело"});
         }
         
-        protected void SaveTask(ListItem item, State userState, DateTime dateTime, Func<ListItem, long> orderSelector)
+        protected void SaveTask(ListItem item, int userId, DateTime dateTime, Func<ListItem, long> orderSelector)
         {
-            var tasksCount = GetTasksCount(userState.UserId, dateTime);
-            var allTasksArray = GetAllCurrentTasks(userState.UserId, tasksCount, dateTime);
+            var tasksCount = GetTasksCount(userId, dateTime);
+            var allTasksArray = GetAllCurrentTasks(userId, tasksCount, dateTime);
             var allTasks = allTasksArray.ToList();
             allTasks.Add(item);
             var i = 1;
@@ -99,10 +100,10 @@ namespace Organizer
                 .OrderBy(orderSelector)
                 .Select(ConvertListItemToBytes))
             {
-                dataBase.SaveData(userState.UserId, GetIdWithOffset(), i, dateTime, task.ToArray());
+                dataBase.SaveData(userId, GetIdWithOffset(), i, dateTime, task.ToArray());
                 i++;
             }
-            dataBase.SaveData(userState.UserId, GetIdWithOffset(), 0, dateTime, tasksCount.ToBytes());
+            dataBase.SaveData(userId, GetIdWithOffset(), 0, dateTime, tasksCount.ToBytes());
         }
         protected int GetTasksCount(int userId, DateTime dateTime)
         {
@@ -133,6 +134,6 @@ namespace Organizer
             return items.ToArray();
         }
 
-        protected abstract Answer AnswerExistingTasksViewing(UiRequest request, State userState);
+        protected abstract Answer ExistingTasksViewingAnswer(UiRequest request, State userState);
     }
 }

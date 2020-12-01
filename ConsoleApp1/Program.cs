@@ -10,6 +10,7 @@ namespace Organizer
             var organizer = new Organizer(
                 new IOrganizerItem[]
                 {
+                    new Alarm(dataBase), 
                     new ThemeLists(new IThemeList[]
                     {
                         new DeadlineTasks(dataBase),

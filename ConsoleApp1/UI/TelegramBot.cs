@@ -137,5 +137,18 @@ namespace Organizer
             answers[answer.UserId] = answer;
             bot.SendTextMessageAsync(chatIds[answer.UserId], answerText.ToString());
         }
+
+        public void SendCheckAnswer(CheckAnswer[] answers)
+        {
+            var message = new StringBuilder();
+            foreach (var answer in answers)
+            {
+                message.Append(answer.HeadLine);
+                foreach (var item in answer.Items)
+                {
+                    message.Append("\t" + item);
+                }
+            }
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace Organizer
             return answer;
         }
 
-        public CheckAnswer Check(int userId)
+        public CheckAnswer Check(State userState)
         {
             throw new NotImplementedException();
         }
