@@ -22,7 +22,7 @@ namespace Organizer
         public TelegramBot(IDataBase dataBase)
         {
             chatIds = new Dictionary<long, long>();
-            bot = new TelegramBotClient("1316902632:AAHmu0MM7-QD7j_kwTMnIRkWEcr49In5_mM");
+            bot = new TelegramBotClient("");
             bot.OnMessage += ReadMessage;
             bot.StartReceiving();
             this.dataBase = dataBase;
