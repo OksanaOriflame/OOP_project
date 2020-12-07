@@ -7,6 +7,7 @@ namespace Organizer
         Text,
         DateTime,
         OnlyDayDateTime,
+        OnlyTimeDateTime,
         Number,
         FirstRequest
     }
@@ -88,6 +89,18 @@ namespace Organizer
                 Format = ExpectingRequestFormat.OnlyDayDateTime,
                 IsBackward = false,
                 Headline = "Введите Дату",
+                Items = new string[0]
+            };
+        }
+
+        public static Answer AskForTime(int userId)
+        {
+            return new Answer()
+            {
+                UserId = userId,
+                Format = ExpectingRequestFormat.OnlyTimeDateTime,
+                IsBackward = false,
+                Headline = "Введите время",
                 Items = new string[0]
             };
         }
