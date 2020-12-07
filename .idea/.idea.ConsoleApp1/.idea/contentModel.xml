@@ -8,7 +8,7 @@
         <e p="Application" t="Include">
           <e p="Answer.cs" t="Include" />
           <e p="CheckAnswer.cs" t="Include" />
-          <e p="IDataBaseIncorrect.cs" t="Include" />
+          <e p="IDataBase.cs" t="Include" />
           <e p="IOrganizerItem.cs" t="Include" />
           <e p="IUi.cs" t="Include" />
           <e p="Organizer.cs" t="Include" />
@@ -16,19 +16,20 @@
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Domain" t="Include">
+          <e p="AbstractThemeList.cs" t="Include" />
           <e p="Alarm.cs" t="Include" />
           <e p="AlarmItem.cs" t="Include" />
           <e p="DailyTasks.cs" t="Include" />
           <e p="DeadlineTasks.cs" t="Include" />
           <e p="IThemeList.cs" t="Include" />
-          <e p="ListItem.cs" t="Include" />
+          <e p="ListTaskItem.cs" t="Include" />
           <e p="ThemeList.cs" t="Include" />
           <e p="ThemeLists.cs" t="Include" />
         </e>
         <e p="Infrastructure" t="Include">
           <e p="BytesExtensions.cs" t="Include" />
           <e p="DataBase.cs" t="Include" />
-          <e p="DataBaseIncorrect.cs" t="Include" />
+          <e p="DataBaseParams.cs" t="Include" />
           <e p="GlobalStates.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">

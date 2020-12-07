@@ -7,6 +7,7 @@ namespace Organizer
         static void Main(string[] args)
         {
             var dataBase = new DataBase();
+            var tg = new TelegramBot(dataBase);
             var organizer = new Organizer(
                 new IOrganizerItem[]
                 {
@@ -18,7 +19,9 @@ namespace Organizer
                     })
                 },
                     dataBase,
-                new TelegramBot(dataBase));
+                tg);
+            //tg.OnMessageRecieved += organizer.ProcessMessage();
+            //organizer.OnReplyRequest += tg.SendAnswer();
             Console.ReadKey();
         }
     }

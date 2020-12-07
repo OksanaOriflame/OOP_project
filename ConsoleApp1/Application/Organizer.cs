@@ -10,9 +10,6 @@ using Org.BouncyCastle.Asn1.Pkcs;
 
 namespace Organizer
 {
-
-    
-
     public class State
     {
         public int UserId { get; }

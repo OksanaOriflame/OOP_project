@@ -2,7 +2,7 @@
 
 namespace Organizer
 {
-    public class ListItem
+    public class ListTaskItem
     {
         public string Text { get; set; }
         public DateTime StartDate { get; set; }

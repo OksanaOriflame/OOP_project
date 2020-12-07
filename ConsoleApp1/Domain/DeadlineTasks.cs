@@ -31,10 +31,10 @@ namespace Organizer
         TaskTextChanging
     }
     
-    public class DeadlineTasks : ThemeList
+    public class DeadlineTasks : AbstractThemeList
     {
         private Dictionary<int, AddingStates> currentAddingStates;
-        private Dictionary<int, ListItem> newItems;
+        private Dictionary<int, ListTaskItem> newItems;
         private Dictionary<int, Func<int , int, UiRequest, Answer>> itemMenuAnswers;
         private Dictionary<int, DeadLineTaskViewingStates> currentViewingStates;
         private Dictionary<int, int> userInputedTaskNumbers;
@@ -42,25 +42,25 @@ namespace Organizer
         protected override int GetIdWithOffset() => GetId() + 100;
         public override string GetName() => "Дела с дедлайном";
 
-        protected override ListItem ParseListItemFromBytes(byte[] bytes)
+        protected override ListTaskItem ParseListItemFromBytes(byte[] bytes)
         {
-            return new ListItem()
+            return new ListTaskItem()
             {
                 DeadLineTime = bytes.DateTimeFromFirstBytes(),
                 Text = bytes.ToStringFrom(8)
             };
         }
 
-        protected override byte[] ConvertListItemToBytes(ListItem item)
+        protected override byte[] ConvertListItemToBytes(ListTaskItem taskItem)
         {
-            return item.DeadLineTime.ToBytes().Concat(item.Text.ToBytes()).ToArray();
+            return taskItem.DeadLineTime.ToBytes().Concat(taskItem.Text.ToBytes()).ToArray();
         }
 
         public DeadlineTasks(IDataBase dataBase) : base(dataBase)
         {
             currentViewingStates = new Dictionary<int, DeadLineTaskViewingStates>();
             currentAddingStates = new Dictionary<int, AddingStates>();
-            newItems = new Dictionary<int, ListItem>();
+            newItems = new Dictionary<int, ListTaskItem>();
             itemMenuAnswers = new Dictionary<int, Func<int, int, UiRequest, Answer>>()
             {
                 [1] = TaskCompletedAnswer,
@@ -179,7 +179,7 @@ namespace Organizer
             }
         }
 
-        private Answer TaskChangeMenuAnswer(int userId, ListItem task)
+        private Answer TaskChangeMenuAnswer(int userId, ListTaskItem task)
         {
             return Answer.MenuAnswer(userId,
                 string.Format("Изменение дела {0}", task.Text),
@@ -225,7 +225,7 @@ namespace Organizer
                     {
                         return Answer.BackWardAnswer(userId);
                     }
-                    newItems[userId] = new ListItem(){ DeadLineTime = request.DateTime};
+                    newItems[userId] = new ListTaskItem(){ DeadLineTime = request.DateTime};
                     currentAddingStates[userId] = AddingStates.Text;
                     return Answer.AskForText(userId, "Назовите дело");
                 case AddingStates.Text:
@@ -243,9 +243,9 @@ namespace Organizer
             return Answer.BackWardAnswer(userId);
         }
 
-        private void ChangeTask(int userId, int taskNumber, DateTime dateTime, ListItem item)
+        private void ChangeTask(int userId, int taskNumber, DateTime dateTime, ListTaskItem taskItem)
         {
-            dataBase.SaveData(userId, GetIdWithOffset(), taskNumber, dateTime, ConvertListItemToBytes(item));
+            dataBase.SaveData(userId, GetIdWithOffset(), taskNumber, dateTime, ConvertListItemToBytes(taskItem));
         }
 
         private void DeleteTask(int userId, int taskNumber, DateTime dateTime)
@@ -257,7 +257,7 @@ namespace Organizer
             SaveTasks(userId, taskList.ToArray(), dateTime);
         }
 
-        private void SaveTasks(int userId, ListItem[] tasks, DateTime dateTime)
+        private void SaveTasks(int userId, ListTaskItem[] tasks, DateTime dateTime)
         {
             var tasksCount = tasks.Length;
             for (var i = 1; i <= tasksCount; i++)
@@ -268,7 +268,7 @@ namespace Organizer
             dataBase.RemoveData(userId, GetIdWithOffset(), tasksCount + 1, dateTime);
         }
 
-        private ListItem GetTask(int userId, int taskNumber, DateTime dateTime)
+        private ListTaskItem GetTask(int userId, int taskNumber, DateTime dateTime)
         {
             var tasksCount = GetTasksCount(userId, dateTime);
             var allTasks = GetAllCurrentTasks(userId, tasksCount, dateTime);

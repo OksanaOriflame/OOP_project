@@ -19,7 +19,7 @@ namespace Organizer
         AddingTask
     }
     
-    public class DailyTasks : ThemeList
+    public class DailyTasks : AbstractThemeList
     {
         private Dictionary<int, DailyTasksViewingState> currentViewingStates;
         private Dictionary<int, DailyTasksAddingState> currentAddingState;
@@ -27,14 +27,14 @@ namespace Organizer
         public override int GetId() => 2;
         public override string GetName() => "Ежедневные дела";
         protected override int GetIdWithOffset() => 1000 + GetId();
-        protected override byte[] ConvertListItemToBytes(ListItem item)
+        protected override byte[] ConvertListItemToBytes(ListTaskItem taskItem)
         {
-            return item.Text.ToBytes();
+            return taskItem.Text.ToBytes();
         }
 
-        protected override ListItem ParseListItemFromBytes(byte[] bytes)
+        protected override ListTaskItem ParseListItemFromBytes(byte[] bytes)
         {
-            return new ListItem() {Text = bytes.To_String()};
+            return new ListTaskItem() {Text = bytes.To_String()};
         }
 
         public DailyTasks(IDataBase dataBase) : base(dataBase)
