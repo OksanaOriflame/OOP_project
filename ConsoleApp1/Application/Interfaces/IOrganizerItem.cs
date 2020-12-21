@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Organizer
+﻿namespace Organizer.Application
 {
     public interface IOrganizerItem
     {
@@ -10,5 +6,6 @@ namespace Organizer
         public string GetName();
         public Answer GetAnswer(UiRequest request, State userState);
         public CheckAnswer Check(State userState);
+        public void ConnectToDataBase(IDataBase dataBase);
     }
 }

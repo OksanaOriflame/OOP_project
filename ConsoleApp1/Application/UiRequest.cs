@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Organizer
+namespace Organizer.Application
 {
     public class UiRequest
     {

@@ -1,4 +1,4 @@
-﻿namespace Organizer
+﻿namespace Organizer.Application
 {
     public enum GlobalStates
     {

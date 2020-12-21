@@ -1,17 +1,8 @@
 ﻿using System;
+using Organizer.Infrastructure;
 
-namespace Organizer
+namespace Organizer.Application
 {
-    public enum ExpectingRequestFormat
-    {
-        Text,
-        DateTime,
-        OnlyDayDateTime,
-        OnlyTimeDateTime,
-        Number,
-        FirstRequest
-    }
-    
     public class Answer
     {
         public int UserId { get; set; }

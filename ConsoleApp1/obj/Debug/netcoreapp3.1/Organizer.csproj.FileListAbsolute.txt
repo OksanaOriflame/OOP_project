@@ -13,7 +13,6 @@ H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.csproj
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.dll
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.pdb
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.genruntimeconfig.cache
-H:\IMKN\project\ConsoleApp1\ConsoleApp1\obj\Debug\netcoreapp3.1\Organizer.csproj.CoreCompileInputs.cache
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\K4os.Compression.LZ4.dll
@@ -36,3 +35,7 @@ H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\runtimes\unix\li
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Ninject.dll
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Castle.Core.dll
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Ninject.Extensions.Conventions.dll
+H:\IMKN\project\ConsoleApp1\ConsoleApp1\bin\Debug\netcoreapp3.1\Ninject.Extensions.Factory.dll

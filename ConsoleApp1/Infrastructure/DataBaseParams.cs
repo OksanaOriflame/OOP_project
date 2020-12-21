@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Organizer
+namespace Organizer.Infrastructure
 {
     public class DataBaseParams
     {

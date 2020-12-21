@@ -45,9 +45,17 @@
               "target": "Package",
               "version": "[8.0.22, )"
             },
+            "Ninject": {
+              "target": "Package",
+              "version": "[3.3.4, )"
+            },
             "Telegram.Bot": {
               "target": "Package",
               "version": "[15.7.1, )"
+            },
+            "ninject.extensions.conventions": {
+              "target": "Package",
+              "version": "[3.3.0, )"
             }
           },
           "imports": [

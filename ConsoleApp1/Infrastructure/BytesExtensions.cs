@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Organizer.Application;
 
-namespace Organizer
+namespace Organizer.Infrastructure
 {
     public static class BytesExtensions
     {
@@ -50,12 +51,49 @@ namespace Organizer
             return new DateTime(ticks);
         }
 
+        public static List<DateTime> ToDateTimesList(this byte[] bytes, int count)
+        {
+            var dates = new List<DateTime>();
+            for (var i = 0; i < count; i++)
+            {
+                var dateTimeBytes = new List<byte>();
+                for (var j = 0; j < 8; j++)
+                {
+                    dateTimeBytes.Add(bytes[i * 8 + j]);
+                }
+                dates.Add(dateTimeBytes.ToArray().ToDateTime());
+            }
+
+            return dates;
+        }
+
+        public static byte[] ToBytes(this List<DateTime> dates)
+        {
+            var bytes = new List<byte>();
+            foreach (var date in dates)
+            {
+                bytes = bytes.Concat(date.ToBytes()).ToList();
+            }
+
+            return bytes.ToArray();
+        }
+
         public static DateTime DateTimeFromFirstBytes(this byte[] bytes)
         {
             return bytes.Take(8).ToArray().ToDateTime();
         }
 
-        public static string ToStringFrom(this byte[] bytes, int count)
+        public static Tuple<DateTime, string> ParseDateAndNameFromBytes(byte[] bytes)
+        {
+            return Tuple.Create(bytes.DateTimeFromFirstBytes(), bytes.ToStringFrom(8));
+        }
+
+        public static byte[] ConvertDateAndNameToBytes(DateTime date, string name)
+        {
+            return date.ToBytes().Concat(name.ToBytes()).ToArray();
+        }
+
+        public static string ToStringFrom(this byte[] bytes, int pos)
         {
             return bytes.Skip(8).ToArray().To_String();
         }
@@ -84,10 +122,10 @@ namespace Organizer
                 Headline = ""
             };
         }
-        
+
         public static byte[] ToBytes(this AlarmItem alarmItem)
         {
-            var firstPart = alarmItem.DateAndTime.ToBytes().ToList();
+            var firstPart = alarmItem.Time.ToBytes().ToList();
             var secondPart = alarmItem.Name.ToBytes().ToList();
 
             return firstPart.Concat(secondPart).ToArray();
@@ -95,10 +133,10 @@ namespace Organizer
 
         public static AlarmItem ToAlarmItem(this byte[] bytes)
         {
-            var dateAndTime = bytes.Take(8).ToArray().ToDateTime();
+            var time = bytes.Take(8).ToArray().ToDateTime();
             var name = bytes.Skip(8).ToArray().To_String();
 
-            return new AlarmItem(name, dateAndTime);
+            return new AlarmItem(name, time);
         }
     }
 }

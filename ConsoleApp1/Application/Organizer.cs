@@ -7,8 +7,9 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using Org.BouncyCastle.Asn1.Pkcs;
+using Organizer.Infrastructure;
 
-namespace Organizer
+namespace Organizer.Application
 {
     public class State
     {
@@ -28,36 +29,56 @@ namespace Organizer
     {
         private IDataBase dataBase;
         private Dictionary<GlobalStates, IOrganizerItem> items;
-        private IUi ui;
         private Dictionary<int, State> userStates;
         private Thread checker;
+        public event Action<int, string, string[], ExpectingRequestFormat> OnReplyRequest;
 
-        public Organizer(IOrganizerItem[] items, IDataBase dataBase, IUi ui)
+        public Organizer(IOrganizerItem[] items, IDataBase dataBase)
         {
             this.items =
                 new Dictionary<GlobalStates, IOrganizerItem>(
                     items.Select(item => new KeyValuePair<GlobalStates, IOrganizerItem>((GlobalStates)item.GetId(), item)));
             this.dataBase = dataBase;
-            this.ui = ui;
-            ui.OnMessageRecieved += ReactOnMessage;
+            foreach (var item in items)
+            {
+                item.ConnectToDataBase(dataBase);
+            }
             userStates = new Dictionary<int, State>();
             checker = new Thread(Check);
         }
 
-        private void Check()
+        public void Start()
         {
-            var checkAnswers = new List<CheckAnswer>();
-            foreach (var item in items)
+            while (true)
             {
-                var answer = item.Value.Check(default);
+                Check();
+                Thread.Sleep(TimeSpan.FromMinutes(1));
             }
         }
 
-        private void ReactOnMessage(UiRequest request)
+        private void Check()
         {
+            /*var checkAnswers = new List<CheckAnswer>();
+            foreach (var item in items)
+            {
+                var answer = item.Value.Check(default);
+            }*/
+        }
+
+        public void ProcessMessage(int userId, DateTime date, string text, int number, bool isBackward, bool isShowThisItem)
+        {
+            var request = new UiRequest()
+            {
+                DateTime = date,
+                IsBackward = isBackward,
+                IsShowThisItem = isShowThisItem,
+                Number = number,
+                Text = text,
+                UserId = userId
+            };
             var userState = GetUserState(request.UserId);
             var answer = GetAnswer(request, userState);
-            ui.SendAnswer(answer);
+            OnReplyRequest?.Invoke(answer.UserId, answer.Headline, answer.Items, answer.Format);
         }
 
         private Answer GetAnswer(UiRequest request, State userState)

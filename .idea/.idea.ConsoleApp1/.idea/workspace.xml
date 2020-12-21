@@ -23,23 +23,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c17deb5-954a-4fae-82e1-06a5c1be2f69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/AbstractThemeList.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ConsoleApp1/Infrastructure/DataBaseParams.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ConsoleApp1/Application/ThemeLists.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/BadClasses.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ConsoleApp1/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ConsoleApp1/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ConsoleApp1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ConsoleApp1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Application/IDataBaseIncorrect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Application/IDataBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Application/Organizer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Application/Organizer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/AbstractThemeList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/AbstractThemeList.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/DailyTasks.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/DailyTasks.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/DeadlineTasks.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/DeadlineTasks.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/ListItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/ListTaskItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/IThemeList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/IThemeList.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Infrastructure/DataBaseIncorrect.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeLists.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ConsoleApp1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/UI/TelegramBot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/UI/TelegramBot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Organizer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Organizer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Organizer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/bin/Debug/netcoreapp3.1/Organizer.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ConsoleApp1/obj/Debug/netcoreapp3.1/Organizer.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,14 +58,9 @@
         <option value="$PROJECT_DIR$/ConsoleApp1/Infrastructure/GlobalStates.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Domain/ListItem.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Application/IUi.cs" />
-        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/IThemeList.cs" />
-        <option value="$PROJECT_DIR$/ConsoleApp1/Application/Answer.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Application/CheckAnswer.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Application/Request.cs" />
-        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/DailyTasks.cs" />
-        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/DeadlineTasks.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Application/IOrganizerItem.cs" />
-        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeLists.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Infrastructure/BytesExtensions.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Domain/AlarmItem.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Domain/Alarm.cs" />
@@ -79,14 +68,21 @@
         <option value="$PROJECT_DIR$/ConsoleApp1/Application/IDataBaseIncorrect.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Infrastructure/DataBase.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Application/SaveParams.cs" />
-        <option value="$PROJECT_DIR$/ConsoleApp1/Program.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Infrastructure/SaveParams.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Infrastructure/DataBaseParams.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Application/IDataBase.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Application/Organizer.cs" />
-        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/AbstractThemeList.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Domain/ListTaskItem.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Application/Answer.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/BadClasses.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeLists.cs" />
         <option value="$PROJECT_DIR$/ConsoleApp1/Domain/ThemeList.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/DeadlineTasks.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/AbstractThemeList.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/DailyTasks.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Program.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Application/ThemeLists.cs" />
+        <option value="$PROJECT_DIR$/ConsoleApp1/Domain/IThemeList.cs" />
       </list>
     </option>
   </component>
@@ -147,6 +143,8 @@
       <workItem from="1606730180091" duration="26143000" />
       <workItem from="1607251306166" duration="601000" />
       <workItem from="1607269980731" duration="1114000" />
+      <workItem from="1607336642864" duration="11281000" />
+      <workItem from="1607406970982" duration="47000" />
     </task>
     <task id="LOCAL-00001" summary="added obeme">
       <created>1606431199525</created>
@@ -204,7 +202,21 @@
       <option name="project" value="LOCAL" />
       <updated>1606801229600</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Da">
+      <created>1607336790397</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1607336790397</updated>
+    </task>
+    <task id="LOCAL-00010" summary="AskForTimeAnswer">
+      <created>1607337679787</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1607337679787</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +247,9 @@
     <MESSAGE value="updated IOrganizerItem&#10;added CheckAnswer" />
     <MESSAGE value="added Alarm.cs and alarmItem" />
     <MESSAGE value="deleted key" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted key" />
+    <MESSAGE value="Da" />
+    <MESSAGE value="AskForTimeAnswer" />
+    <option name="LAST_COMMIT_MESSAGE" value="AskForTimeAnswer" />
   </component>
   <component name="WindowStateProjectService">
     <state width="509" height="464" key="DebuggerActiveHint" timestamp="1606756714759">
@@ -350,10 +364,10 @@
     </state>
     <state width="1877" height="170" key="GridCell.Tab.4.right/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606809156359" />
     <state width="1877" height="170" key="GridCell.Tab.4.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1606757592771" />
-    <state x="794" y="221" key="RiderGenerateDialog" timestamp="1606689918344">
+    <state x="794" y="221" key="RiderGenerateDialog" timestamp="1607355481489">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="794" y="221" key="RiderGenerateDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606689918344" />
+    <state x="794" y="221" key="RiderGenerateDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607355481489" />
     <state x="730" y="230" key="RollbackChangesDialog" timestamp="1606660664477">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -362,10 +376,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606804309849" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1606801231013">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1607337681274">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1606801231013" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607337681274" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1606750697720">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

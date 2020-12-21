@@ -1,32 +1,29 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading;
+using Organizer.Application.Interfaces;
+using Organizer.Infrastructure;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
-namespace Organizer
+namespace Organizer.UI
 {
     public class TelegramBot : IUi
     {
         private Dictionary<long, long> chatIds;
         private TelegramBotClient bot;
-        private Dictionary<int, Answer> answers;
-        private IDataBase dataBase;
-        public event Action<UiRequest> OnMessageRecieved;
+        private Dictionary<int, ExpectingRequestFormat> usersExpectingFormats;
+        private Dictionary<int, Tuple<int, int>> usersRanges;
+        public event Action<int, DateTime, string, int, bool, bool> OnMessageRecieved;
 
-        public TelegramBot(IDataBase dataBase)
+        public TelegramBot()
         {
             chatIds = new Dictionary<long, long>();
             bot = new TelegramBotClient("1316902632:AAHmu0MM7-QD7j_kwTMnIRkWEcr49In5_mM");
             bot.OnMessage += ReadMessage;
             bot.StartReceiving();
-            this.dataBase = dataBase;
-            answers = new Dictionary<int, Answer>();
+            usersExpectingFormats = new Dictionary<int, ExpectingRequestFormat>();
+            usersRanges = new Dictionary<int, Tuple<int, int>>();
         }
 
         private void ReadMessage(object sender, MessageEventArgs args)
@@ -41,21 +38,27 @@ namespace Organizer
             }
             else
             {
-                var request = new UiRequest() {UserId = userId};
-                var lastAnswer = GetLastAnswer(userId);
+                DateTime date = default;
+                string text = "";
+                int number = 0;
+                bool isBackward = false;
+                bool isShowThisItem = false;
+                var expecting = GetExpecting(userId);
+                var expectingFormat = expecting.Item1;
+                var expectingRange = Tuple.Create(expecting.Item2, expecting.Item3);
                 if (GetStringWithoutOpeningSlash(message).ToLower() == "back")
                 {
-                    request.IsBackward = true;
-                    OnMessageRecieved!(request);
+                    isBackward = true;
+                    OnMessageRecieved?.Invoke(userId, date, text, number, isBackward, isShowThisItem);
                     return;
                 }
-                switch (lastAnswer.Format)
+                switch (expectingFormat)
                 {
                     case ExpectingRequestFormat.FirstRequest:
-                        request.IsShowThisItem = true;
+                        isShowThisItem = true;
                         break;
                     case ExpectingRequestFormat.Text:
-                        request.Text = message;
+                        text = message;
                         break;
                     case ExpectingRequestFormat.DateTime :
                     {
@@ -67,7 +70,7 @@ namespace Organizer
                             return;
                         }
 
-                        request.DateTime = dateTime;
+                        date = dateTime;
                         break;
                     }
                     case ExpectingRequestFormat.OnlyDayDateTime:
@@ -76,26 +79,39 @@ namespace Organizer
                         if (!isDateTime)
                         {
                             bot.SendTextMessageAsync(chatId,
-                                "Некорректный формат даты.\nПопробуйте ДД-ММ-ГГГГ ЧЧ:ММ\n/Back");
+                                "Некорректный формат даты.\nПопробуйте ДД-ММ-ГГГГ\n/Back");
                             return;
                         }
                         
-                        request.DateTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day);
+                        date = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day);
                         break;
                     }
                     case ExpectingRequestFormat.Number:
                         message = GetStringWithoutOpeningSlash(message);
-                        var isInt = int.TryParse(message, out var number);
-                        if (!isInt || number < lastAnswer.NumberRange.Item1 || number > lastAnswer.NumberRange.Item2)
+                        var isInt = int.TryParse(message, out var outNumber);
+                        if (!isInt || outNumber < expectingRange.Item1 || outNumber > expectingRange.Item2)
                         {
                             bot.SendTextMessageAsync(chatId, "Неверное число\n/Back");
                             return;
                         }
 
-                        request.Number = number;
+                        number = outNumber;
                         break;
+                    case ExpectingRequestFormat.OnlyTimeDateTime:
+                    {
+                        var isDateTime = DateTime.TryParse(message, out var dateTime);
+                        if (!isDateTime)
+                        {
+                            bot.SendTextMessageAsync(chatId,
+                                "Некорректный формат времени.\nПопробуйте ЧЧ:ММ\n/Back");
+                            return;
+                        }
+
+                        date = dateTime;
+                        break;
+                    }
                 }
-                OnMessageRecieved!(request);
+                OnMessageRecieved?.Invoke(userId, date, text, number, isBackward, isShowThisItem);
             }
         }
 
@@ -109,46 +125,31 @@ namespace Organizer
             return str;
         }
 
-        private Answer GetLastAnswer(int userId)
+        private Tuple<ExpectingRequestFormat, int, int> GetExpecting(int userId)
         {
-            if (!answers.ContainsKey(userId))
+            if (!usersExpectingFormats.ContainsKey(userId) || !usersRanges.ContainsKey(userId))
             {
-                var answer = new Answer()
-                {
-                    Format = ExpectingRequestFormat.FirstRequest, NumberRange = new Tuple<int, int>(0, 0)
-                };
-                answers[userId] = answer;
+                return Tuple.Create(ExpectingRequestFormat.FirstRequest, 0, 0);
             }
-            return answers[userId];
+
+            return Tuple.Create(usersExpectingFormats[userId], usersRanges[userId].Item1, usersRanges[userId].Item2);
         }
 
-        public void SendAnswer(Answer answer)
+        public void SendAnswer(int userId, string headline, string[] items, ExpectingRequestFormat format)
         {
             var answerText = new StringBuilder();
-            answerText.Append(answer.Headline + "\n");
+            answerText.Append(headline + "\n");
             var i = 1;
-            foreach (var answerItem in answer.Items)
+            foreach (var answerItem in items)
             {
                 answerText.Append("/" + i + " - " + answerItem + "\n");
                 i++;
             }
 
             answerText.Append("/Back");
-            answers[answer.UserId] = answer;
-            bot.SendTextMessageAsync(chatIds[answer.UserId], answerText.ToString());
-        }
-
-        public void SendCheckAnswer(CheckAnswer[] answers)
-        {
-            var message = new StringBuilder();
-            foreach (var answer in answers)
-            {
-                message.Append(answer.HeadLine);
-                foreach (var item in answer.Items)
-                {
-                    message.Append("\t" + item);
-                }
-            }
+            usersExpectingFormats[userId] = format;
+            usersRanges[userId] = Tuple.Create(1, items.Length);
+            bot.SendTextMessageAsync(chatIds[userId], answerText.ToString());
         }
     }
 }
